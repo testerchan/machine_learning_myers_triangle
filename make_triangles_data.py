@@ -14,31 +14,39 @@ def save_file(file_name, s):
 	with open(file_name, 'w') as f:
 		f.write(s)
 
+def shuffle(a, b, c):
+	l = [a, b, c]
+	random.shuffle(l)
+	return l[0], l[1], l[2]
+
 save_str = ''
 
-for i in range(100000):
-	a = random.randint(1, 99999)
-	b = random.randint(1, 99999)
-	c = random.randint(1, 99999)
+for i in range(10000):
+	a = random.randint(1, 100000)
+	b = random.randint(1, 100000)
+	c = random.randint(1, 100000)
 
 	rnd = random.randrange(3)
 	if rnd == 0:
-		ans = judge_triangle(a, b, c)
-		save_str += str(a) + ',' + str(b) + ',' + str(c) + ',' + str(ans) + str('\n')
-	elif rnd == 1:
-		ans = judge_triangle(a, a, a)
-		save_str += str(a) + ',' + str(a) + ',' + str(a) + ',' + str(ans) + str('\n')
-	elif rnd == 2:
 		rnd2 = random.randrange(3)
+		#a = b + cの場合
 		if rnd2 == 0:
-			ans = judge_triangle(a, a, c)
-			save_str += str(a) + ',' + str(a) + ',' + str(c) + ',' + str(ans) + str('\n')
-		elif rnd2 == 1:
-			ans = judge_triangle(a, b, b)
-			save_str += str(a) + ',' + str(b) + ',' + str(b) + ',' + str(ans) + str('\n')
-		elif rnd2 == 2:
-			ans = judge_triangle(c, b, c)
-			save_str += str(c) + ',' + str(b) + ',' + str(c) + ',' + str(ans) + str('\n')
+			b = random.randrange(a)
+			c = a - b
+			a,b,c = shuffle(a, b, c)
+			ans = judge_triangle(a, b, c)
+		else:
+			ans = judge_triangle(a, b, c)
+	elif rnd == 1:
+		b = a
+		c = a
+		ans = judge_triangle(a, b, c)
+	elif rnd == 2:
+		a,b,c = shuffle(a, a, c)
+		ans = judge_triangle(a, b, c)
+	save_str += str(a) + ',' + str(b) + ',' + str(c) + ',' + str(ans) + str('\n')
+		
+			
 
 
 	

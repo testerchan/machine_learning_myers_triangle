@@ -1,5 +1,0 @@
-MID_LAYER_NUM = 128
-OUTPUT_NUM = 4
-EPOCH_NUM = 1000
-TEACHER_DATA_NAME = 'teacher_data.csv'
-SAVE_FILE_NAME = 'test.hdf5'

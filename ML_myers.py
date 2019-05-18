@@ -3,7 +3,7 @@ import chainer
 from chainer import Variable
 import chainer.functions as F
 import numpy as np
-import config
+import common
 
 
 def get_triangle_name(label):
@@ -40,14 +40,17 @@ def please_input(side_name):
 
 
 print('Please enter the side length of the triangle. \nAnswer the triangle type.\n\n')
+inst_common = common.common()
 while True:
 	a = please_input('A')
 	b = please_input('B')
 	c = please_input('C')
-	model = nn.NN(config.MID_LAYER_NUM, config.OUTPUT_NUM)
-	chainer.serializers.load_hdf5(config.SAVE_FILE_NAME, model)
+	input_list = inst_common.normalization([a, b, c])
 
-	input_data = (np.array([[a,b,c]])).astype(np.float32)
+	model = nn.NN(inst_common.MID_LAYER_NUM, inst_common.OUTPUT_NUM)
+	chainer.serializers.load_hdf5(inst_common.SAVE_FILE_NAME, model)
+
+	input_data = (np.array([input_list])).astype(np.float32)
 	input_data = Variable(input_data.astype(np.float32))
 
 	result = model(input_data)
